@@ -7,10 +7,12 @@ from django.shortcuts import redirect
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -44,6 +46,7 @@ def about(request):
     return render(request, 'rango/about.html')
 
 
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -59,6 +62,7 @@ def add_category(request):
     return render(request, 'rango/add_category.html', {'form': form})
 
 
+@login_required
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -145,3 +149,16 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'rango/login.html')
+
+
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
+
+
+@login_required
+def user_logout(request):
+
+    logout(request)
+    return redirect(reverse('rango:index'))
+
