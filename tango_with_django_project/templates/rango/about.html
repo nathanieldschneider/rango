@@ -14,6 +14,9 @@
             <strong>This tutorial has been put together by Nathan.</strong><br />
         </div>
         <div>
+            Visits: {{ visits }}
+        </div>
+        <div>
             <a href="{% url 'rango:index' %}">Index</a><br />
             <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
             <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat." />
